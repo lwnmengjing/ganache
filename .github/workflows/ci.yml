@@ -27,8 +27,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: chainide
+          password: ${{ secrets.EXTERNAL_GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -40,9 +40,7 @@ jobs:
           tags: |
             type=schedule
             type=ref,event=tag
-            type=sha
-          labels: |
-            maintainer=chainide
+            type=sha,prefix=,format=short,enable=true,priority=100
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
